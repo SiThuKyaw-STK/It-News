@@ -50,6 +50,7 @@ class ArticleController extends Controller
         $article->title = $request->title;
         $article->slug = Str::slug($request->title)."-".uniqid();
         $article->description = $request->description;
+        $article->excerpt = \Illuminate\Support\Str::words($request->description,50);
         $article->category_id = $request->category;
         $article->user_id = Auth::id();
         $article->save();
@@ -97,6 +98,7 @@ class ArticleController extends Controller
         $article->title = $request->title;
         $article->slug = Str::slug($request->title)."-".uniqid();
         $article->description = $request->description;
+        $article->excerpt = \Illuminate\Support\Str::words($request->description,50);
         $article->category_id = $request->category;
         $article->update();
 
@@ -114,5 +116,9 @@ class ArticleController extends Controller
         $article->delete();
 
         return redirect()->back()->with("articleDeleteStatus",$article->title);
+    }
+
+    public function apiIndex(){
+        return Article::all();
     }
 }

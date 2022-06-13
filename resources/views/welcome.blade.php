@@ -14,7 +14,7 @@
 
 
                 <div class="text-black-50 the-excerpt">
-                    <p>{{\Illuminate\Support\Str::words($article->description,50)}}</p>
+                    <p>{{$article->excerpt}}</p>
                 </div>
 
                 <div class=" d-flex justify-content-between align-items-center see-more-group">
