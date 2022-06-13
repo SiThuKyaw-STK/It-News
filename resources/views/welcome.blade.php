@@ -9,7 +9,7 @@
                     {{$article->title}} </a>
 
                 <div class="small post-category my-3">
-                    <a href="{{route('baseOnCategory',$article->category->slug)}}" rel="category tag">{{$article->category->title}}</a>
+                    <a href="{{route('baseOnCategory',$article->category->id)}}" rel="category tag">{{$article->category->title}}</a>
                 </div>
 
 
