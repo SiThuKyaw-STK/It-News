@@ -14,8 +14,21 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function apiIndex(){
+        $articles = Article::when(isset(request()->search),function ($q){
+            $q->orwhere('title','Like','%'.request()->search.'%')->orwhere('description','Like','%'.request()->search.'%');
+        })->with(['user','category'])->latest('id')->paginate(5);
+        return $articles;
+    }
+
     public function index()
     {
+//        $all = Article::all();
+//        foreach ($all as $a){
+//            $a->excerpt = \Illuminate\Support\Str::words($a->description,50);
+//            $a->update();
+//        }
         $articles = Article::when(isset(request()->search),function ($q){
             $q->orwhere('title','Like','%'.request()->search.'%')->orwhere('description','Like','%'.request()->search.'%');
         })->with(['user','category'])->latest('id')->paginate(5);
@@ -50,6 +63,7 @@ class ArticleController extends Controller
         $article->title = $request->title;
         $article->slug = Str::slug($article->title)."-".uniqid();
         $article->description = $request->description;
+        $article->excerpt = \Illuminate\Support\Str::words($request->description,50);
         $article->category_id = $request->category;
         $article->user_id = Auth::id();
         $article->save();
@@ -94,8 +108,12 @@ class ArticleController extends Controller
             "description" => "required|min:5"
         ]);
 
+        if ($article->title != $request->title){
+            $article->slug = Str::slug($request->title)."-".uniqid();
+        }
         $article->title = $request->title;
         $article->description = $request->description;
+        $article->excerpt = \Illuminate\Support\Str::words($request->description,50);
         $article->category_id = $request->category;
         $article->update();
 
@@ -114,4 +132,5 @@ class ArticleController extends Controller
 
         return redirect()->back()->with("articleDeleteStatus",$article->title);
     }
+
 }
