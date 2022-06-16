@@ -38,13 +38,13 @@
                                     <td>{{$user->role}}</td>
                                     <td>
                                         @if($user->role > 0)
-                                        <form action="{{route('user-manger.make-admin')}}" method="post">
+                                        <form action="{{route('user-manger.make-admin')}}" id="form{{$user->id}}" method="post">
                                             @csrf
                                             <input type="hidden" name="id" value="{{$user->id}}">
-                                            <button class="btn btn-outline-primary">Make Admin</button>
+                                            <button type="button" class="btn btn-outline-primary" onclick="return askConfirm({{$user->id}})">Make Admin</button>
                                         </form>
                                         @else
-                                            <button class="btn btn-primary disabled">Make Admin</button>
+                                            <button class="btn btn-primary disabled" >Make Admin</button>
                                         @endif
                                     </td>
                                     <td>{{$user->created_at}}</td>
@@ -59,3 +59,29 @@
         </div>
     </div>
 @endsection
+@section('foot')
+    <script>
+        function askConfirm(id){
+            Swal.fire({
+                title: 'Are you sure to upgrade role?',
+                text: "role change",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Confirm'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Updated!',
+                        'Role is Updated',
+                        'success'
+                    )
+                    setTimeout(function (){
+                        $("#form"+id).submit();
+                    },1500);
+                }
+            })
+        }
+    </script>
+    @endsection
