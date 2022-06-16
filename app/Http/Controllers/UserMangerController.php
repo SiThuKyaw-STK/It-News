@@ -14,8 +14,10 @@ class UserMangerController extends Controller
 
     public function makeAdmin(Request $request){
 
+//        return $request;
+
         $currentUser = User::find($request->id);
-        if ($currentUser->role == 2){
+        if ($currentUser->role == 1){
             $currentUser->role = '0';
             $currentUser->update();
         }
