@@ -26,7 +26,7 @@ class ArticleController extends Controller
     {
 //        $all = Article::all();
 //        foreach ($all as $a){
-//            $a->excerpt = \Illuminate\Support\Str::words($a->description,50);
+//            $a->slug = Str::slug($a->title)."-".uniqid();
 //            $a->update();
 //        }
         $articles = Article::when(isset(request()->search),function ($q){
