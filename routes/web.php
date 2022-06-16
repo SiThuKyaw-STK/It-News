@@ -20,9 +20,17 @@ Route::get('/uploader/{id}','BlogController@baseOnUser')->name('baseOnUser');
 
 Route::view('/about','blog.about')->name('about');
 
+
+
 Auth::routes();
 
 Route::prefix('dashboard')->middleware("auth")->group(function (){
+
+    Route::middleware('AdminOnly')->group(function (){
+        //User Manger
+        Route::get('/user-manger','UserMangerController@index')->name('user-manger.index');
+        Route::post('/make-admin','UserMangerController@makeAdmin')->name('user-manger.make-admin');
+    });
 
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('category','CategoryController');
