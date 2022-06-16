@@ -11,7 +11,7 @@
 
     <div class="row">
         <div class="col-12 col-md-4">
-            <div class="card mb-3">
+            <div class="card">
                 <div class="card-body">
                     <form action="{{ route('profile.changeName') }}" method="post">
                         @csrf
@@ -40,6 +40,8 @@
 
                 </div>
             </div>
+        </div>
+        <div class="col-12 col-md-4">
             <div class="card">
                 <div class="card-body">
                     <form action="{{ route('profile.changeEmail') }}" method="post">
@@ -63,6 +65,45 @@
                             <button type="submit" class="btn btn-primary">
                                 <i class="mr-1 feather-refresh-ccw"></i>
                                 Change Email
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <form action="{{ route('profile.update.info') }}" method="post">
+                        @csrf
+                        <div class="form-group">
+                            <lable for="phone"><i class="mr-1 fa-solid fa-phone"></i>Your Phone</lable>
+                            <input value="{{\Illuminate\Support\Facades\Auth::user()->phone}}" type="text" name="phone" class="form-control">
+                            @error("phone")
+                            <small class="font-weight-bold text-danger">please correct phone number</small>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="address">
+                                <i class="mr-1 fa-solid fa-map-location"></i>
+                                Your Address
+                            </label>
+                            <textarea class="form-control" name="address" id="" rows="15">{{\Illuminate\Support\Facades\Auth::user()->address}}</textarea>
+                            @error("address")
+                            <small class="font-weight-bold text-danger">please fill fully address!</small>
+                            @enderror
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="customSwitch4" required>
+                                <label class="custom-control-label" for="customSwitch4">I'm Sure</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="mr-1 feather-refresh-ccw"></i>
+                                Change Address
                             </button>
                         </div>
                     </form>

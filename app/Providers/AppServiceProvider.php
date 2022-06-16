@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Article;
 use App\Category;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;

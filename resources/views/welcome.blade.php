@@ -67,6 +67,7 @@
         {{$articles->onEachSide(1)->links()}}
     </div>
 
+
 @endsection
 
 @section('pagination-place')

@@ -71,7 +71,7 @@
 .header{
     position: sticky;
     top: 0.2rem;
-    z-index: 2000;
+    z-index: 1005;
 }
 
 .user-img{

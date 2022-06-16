@@ -40,7 +40,7 @@
                     </div>
                     @if(session("articleAddStatus"))
                         <div class="alert alert-success alert-dismissible fade show my-2" role="alert">
-                            <strong>{{session("articleAddStatus")}}</strong> is updated.
+                            <strong>{{session("articleAddStatus")}}</strong> is added.
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -48,7 +48,7 @@
                     @endif
                     @if(session("articleUpdateStatus"))
                         <div class="alert alert-success alert-dismissible fade show my-2" role="alert">
-                            <strong>{{session("articleUpdateStatus")}}</strong> is added.
+                            <strong>{{session("articleUpdateStatus")}}</strong> is updated.
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -110,8 +110,9 @@
                         </tbody>
                     </table>
 
-                    <div>
-                        {{$articles->appends(request()->all())->links()}}
+                    <div class="d-flex justify-content-between">
+                        {{ $articles->appends(request()->all())->links() }}
+                        <p class="font-weight-bold mb-0 h4">Total : {{ $articles->total() }}</p>
                     </div>
 
                 </div>

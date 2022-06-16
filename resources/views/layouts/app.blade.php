@@ -42,5 +42,14 @@
     })
 </script>
 @yield('foot')
+
+@auth
+    @empty(\Illuminate\Support\Facades\Auth::user()->phone && \Illuminate\Support\Facades\Auth::user()->address)
+    @include('user-profile.update-info')
+    @endempty
+
+@endauth
+@include('layouts.toast')
+
 </body>
 </html>

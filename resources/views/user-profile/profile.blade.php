@@ -19,7 +19,14 @@
                         <small class="text-black-50">
                             {{ Auth::user()->email }}
                         </small>
-
+                    </div>
+                    <div class="text-center">
+                        <hr>
+                        <h4 class="mb-0 font-weight-bold">Phone</h4>
+                        <h5 class="mb-0 text-black-50">{{\Illuminate\Support\Facades\Auth::user()->phone}}</h5>
+                        <hr>
+                        <h4 class="mb-0 font-weight-bold">Address</h4>
+                        <h5 class="mb-0 text-black-50">{{\Illuminate\Support\Facades\Auth::user()->address}}</h5>
                     </div>
                 </div>
             </div>

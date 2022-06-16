@@ -38,6 +38,9 @@ Route::prefix('dashboard')->middleware("auth")->group(function (){
         Route::post('/change-password','ProfileController@changePassword')->name('profile.changePassword');
         Route::post('/change-name','ProfileController@changeName')->name('profile.changeName');
         Route::post('/change-email','ProfileController@changeEmail')->name('profile.changeEmail');
+        Route::post('/change-phone','ProfileController@changePhone')->name('profile.changePhone');
+        Route::post('/change-address','ProfileController@changeAddress')->name('profile.changeAddress');
         Route::post('/change-photo','ProfileController@changePhoto')->name('profile.changePhoto');
+        Route::post("/update-user-info","ProfileController@updateInfo")->name("profile.update.info");
     });
 });
