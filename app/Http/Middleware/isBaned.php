@@ -18,7 +18,7 @@ class isBaned
     {
         if (Auth::user()->isBanded == 1){
             Auth::logout();
-            return redirect()->route("login")->with("alert",['icon'=>'error','title'=>'you are baned','message'=>'contact admin']);
+            return redirect()->route("login")->with('alert',['icon'=>'error','title'=>'you are baned','message'=>'contact admin']);
         }
         return $next($request);
     }

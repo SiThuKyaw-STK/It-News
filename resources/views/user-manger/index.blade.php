@@ -43,13 +43,22 @@
                                             <input type="hidden" name="id" value="{{$user->id}}">
                                             <button type="button" class="btn btn-outline-primary" onclick="return askConfirm({{$user->id}})">Make Admin</button>
                                         </form>
-                                        <form class="d-inline-block" action="{{route('user-manger.banUser')}}" id="banForm{{$user->id}}" method="post">
-                                            @csrf
-                                            <input type="hidden" name="id" value="{{$user->id}}">
-                                            <button type="button" class="btn btn-outline-danger" onclick="return banConfirm({{$user->id}})">Ban User</button>
-                                        </form>
+                                        @if($user->isBanded == 1)
+                                                <form class="d-inline-block" action="{{route('user-manger.restoreUser')}}" id="restoreForm{{$user->id}}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{$user->id}}">
+                                                    <button type="button" class="btn btn-outline-success" onclick="return restoreConfirm({{$user->id}})">Restore User</button>
+                                                </form>
+                                            <p class="m-0 text-danger">this user is baned!!!</p>
                                         @else
-                                            <h5 class="mb-0 fw-bolder text-primary">This is Admin</h5>
+                                            <form class="d-inline-block" action="{{route('user-manger.banUser')}}" id="banForm{{$user->id}}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{$user->id}}">
+                                                <button type="button" class="btn btn-outline-danger" onclick="return banConfirm({{$user->id}})">Ban User</button>
+                                            </form>
+                                        @endif
+{{--                                        @else--}}
+{{--                                            <h5 class="mb-0 fw-bolder text-primary">This is Admin</h5>--}}
                                         @endif
                                     </td>
                                     <td>{{$user->created_at}}</td>
@@ -109,6 +118,29 @@
                         )
                         setTimeout(function (){
                             $("#banForm"+id).submit();
+                        },1500);
+                    }
+                })
+            }
+
+            function restoreConfirm(id){
+                Swal.fire({
+                    title: 'Are You Sure to restore this user?',
+                    text: "Restore this User",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Confirm'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            'User Restored!',
+                            'User is Restored',
+                            'success'
+                        )
+                        setTimeout(function (){
+                            $("#restoreForm"+id).submit();
                         },1500);
                     }
                 })

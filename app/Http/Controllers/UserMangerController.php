@@ -38,4 +38,17 @@ class UserMangerController extends Controller
 
         return redirect()->route('user-manger.index')->with("toast",["icon" => "success" , "title" => $currentUser->name . " is baned!!!"]);
     }
+
+    public function restoreUser(Request $request){
+
+//        return User::find($request->id);
+
+        $currentUser = User::find($request->id);
+        if ($currentUser->isBanded == 1){
+            $currentUser->isBanded = '0';
+            $currentUser->update();
+        }
+
+        return redirect()->route('user-manger.index')->with("toast",["icon" => "success" , "title" => $currentUser->name . " is restored!!!"]);
+    }
 }
