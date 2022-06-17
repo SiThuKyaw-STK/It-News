@@ -24,12 +24,13 @@ Route::view('/about','blog.about')->name('about');
 
 Auth::routes();
 
-Route::prefix('dashboard')->middleware("auth")->group(function (){
+Route::prefix('dashboard')->middleware(["auth","isBaned"])->group(function (){
 
-    Route::middleware('AdminOnly')->group(function (){
+    Route::middleware(['AdminOnly'])->group(function (){
         //User Manger
         Route::get('/user-manger','UserMangerController@index')->name('user-manger.index');
-        Route::post('/make-admin','UserMangerController@makeAdmin')->name('user-manger.make-admin');
+        Route::post('/make-admin','UserMangerController@makeAdmin')->name('user-manger.makeAdmin');
+        Route::post('/ban-user','UserMangerController@banUser')->name('user-manger.banUser');
     });
 
     Route::get('/home', 'HomeController@index')->name('home');

@@ -38,13 +38,18 @@
                                     <td>{{$user->role}}</td>
                                     <td>
                                         @if($user->role > 0)
-                                        <form action="{{route('user-manger.make-admin')}}" id="form{{$user->id}}" method="post">
+                                        <form class="d-inline-block" action="{{route('user-manger.makeAdmin')}}" id="form{{$user->id}}" method="post">
                                             @csrf
                                             <input type="hidden" name="id" value="{{$user->id}}">
                                             <button type="button" class="btn btn-outline-primary" onclick="return askConfirm({{$user->id}})">Make Admin</button>
                                         </form>
+                                        <form class="d-inline-block" action="{{route('user-manger.banUser')}}" id="banForm{{$user->id}}" method="post">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{$user->id}}">
+                                            <button type="button" class="btn btn-outline-danger" onclick="return banConfirm({{$user->id}})">Ban User</button>
+                                        </form>
                                         @else
-                                            <button class="btn btn-primary disabled" >Make Admin</button>
+                                            <h5 class="mb-0 fw-bolder text-primary">This is Admin</h5>
                                         @endif
                                     </td>
                                     <td>{{$user->created_at}}</td>
@@ -60,28 +65,53 @@
     </div>
 @endsection
 @section('foot')
-    <script>
-        function askConfirm(id){
-            Swal.fire({
-                title: 'Are you sure to upgrade role?',
-                text: "role change",
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Confirm'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Updated!',
-                        'Role is Updated',
-                        'success'
-                    )
-                    setTimeout(function (){
-                        $("#form"+id).submit();
-                    },1500);
-                }
-            })
-        }
-    </script>
+        <script>
+
+            function askConfirm(id){
+                Swal.fire({
+                    title: 'Admin role ပြောင်းမှာသေချာပါသလား?',
+                    text: "Admin ပြောင်းလိုက်ရင် အကုန်လုပ်လို့ ရသွားမှာပါ။",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Confirm'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            'Updated!',
+                            'Role is Updated',
+                            'success'
+                        )
+                        setTimeout(function (){
+                            $("#form"+id).submit();
+                        },1500);
+                    }
+                })
+            }
+
+
+            function banConfirm(id){
+                Swal.fire({
+                    title: 'Are You Sure to ban?',
+                    text: "Ban this User",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Confirm'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            'User Baned!',
+                            'User is Baned',
+                            'success'
+                        )
+                        setTimeout(function (){
+                            $("#banForm"+id).submit();
+                        },1500);
+                    }
+                })
+            }
+        </script>
     @endsection
