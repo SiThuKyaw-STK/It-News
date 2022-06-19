@@ -11,7 +11,7 @@
         <ul>
 
 
-            <x-menu-item name="Home" class="feather-home" link="{{ route('home') }}"></x-menu-item>
+            <x-menu-item name="Home" class="feather-home" link="{{ route('index') }}"></x-menu-item>
 
 
             <x-menu-title title="My Test Menu"></x-menu-title>
@@ -30,8 +30,6 @@
             @if(\Illuminate\Support\Facades\Auth::user()->role == 0)
             <x-menu-title title="Users Manager"></x-menu-title>
             <x-menu-item name="Users" class="feather-users" link="{{route('user-manger.index')}}" ></x-menu-item>
-            <x-menu-item name="Create Article" class="feather-plus-circle" link="{{route('article.create')}}" ></x-menu-item>
-            <x-menu-item name="Article List" class="fas fa-list" link="{{route('article.index')}}" ></x-menu-item>
             <x-menu-spacer></x-menu-spacer>
             @endif
 

@@ -33,7 +33,10 @@
                             @foreach($users as $user)
                                 <tr>
                                     <td>{{$user->id}}</td>
-                                    <td>{{$user->name}}</td>
+                                    <td>
+                                        <img src="{{ isset($user->photo) ? asset('storage/profile/'.$user->photo) : asset('dashboard/img/user-default-photo.png') }}" class="user-img shadow-sm" alt="">
+                                        {{$user->name}}
+                                    </td>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->role}}</td>
                                     <td>
@@ -43,6 +46,8 @@
                                             <input type="hidden" name="id" value="{{$user->id}}">
                                             <button type="button" class="btn btn-outline-primary" onclick="return askConfirm({{$user->id}})">Make Admin</button>
                                         </form>
+
+                                        <button class="btn btn-outline-warning" onclick="changePassword({{$user->id}},'{{$user->name}}')">change passwrod</button>
                                         @if($user->isBanded == 1)
                                                 <form class="d-inline-block" action="{{route('user-manger.restoreUser')}}" id="restoreForm{{$user->id}}" method="post">
                                                     @csrf
@@ -57,12 +62,29 @@
                                                 <button type="button" class="btn btn-outline-danger" onclick="return banConfirm({{$user->id}})">Ban User</button>
                                             </form>
                                         @endif
-{{--                                        @else--}}
-{{--                                            <h5 class="mb-0 fw-bolder text-primary">This is Admin</h5>--}}
+
+                                        @else
+                                            <h5 class="mb-0 fw-bolder text-primary">This is Admin</h5>
                                         @endif
                                     </td>
-                                    <td>{{$user->created_at}}</td>
-                                    <td>{{$user->updated_at}}</td>
+                                    <td>
+                                        <small>
+                                            <i class="feather-calendar"></i>
+                                            {{$user->created_at->format("d F Y")}}
+                                            <br>
+                                            <i class="feather-clock"></i>
+                                            {{$user->created_at->format("h:i a")}}
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <small>
+                                            <i class="feather-calendar"></i>
+                                            {{$user->updated_at->format("d F Y")}}
+                                            <br>
+                                            <i class="feather-clock"></i>
+                                            {{$user->updated_at->format("h:i a")}}
+                                        </small>
+                                    </td>
                                 </tr>
                             @endforeach
 
@@ -142,6 +164,42 @@
                         setTimeout(function (){
                             $("#restoreForm"+id).submit();
                         },1500);
+                    }
+                })
+            }
+
+            function changePassword(id,name){
+
+                let url = "{{route('user-manger.changeUserPassword')}}"
+
+                Swal.fire({
+                    title: 'Change Password for '+name,
+                    input: 'password',
+                    inputAttributes: {
+                        autocapitalize: 'off',
+                        required: 'required',
+                        minLength:8
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Change',
+                    showLoaderOnConfirm: true,
+                    preConfirm :function (newPassword){
+                        $.post(url,{
+                            id : id,
+                            password: newPassword,
+                            _token : "{{csrf_token()}}",
+
+                        }).done(function (data){
+                            if (data.status == 200){
+                                Swal.fire(
+                                    'Password Changed',
+                                    data.message,
+                                    'success'
+                                )
+                            }else {
+                                Swal.fire("error",data.message)
+                            }
+                        })
                     }
                 })
             }

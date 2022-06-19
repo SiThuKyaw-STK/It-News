@@ -42,10 +42,10 @@
                     <ul class="dropdown-menu  depth_0">
                         <li id="menu-item-9"
                             class="menu-item menu-item-type-custom menu-item-object-custom nav-item nav-item-9"><a
-                                href="http://google.com/" class="dropdown-item ">facebook</a></li>
+                                href="{{route('login')}}" class="dropdown-item ">Login</a></li>
                         <li id="menu-item-10"
                             class="menu-item menu-item-type-custom menu-item-object-custom nav-item nav-item-10"><a
-                                href="http://google.com/" class="dropdown-item ">youtube</a></li>
+                                href="{{route('register')}}" class="dropdown-item ">Register</a></li>
                     </ul>
                 </li>
                 <li id="menu-item-11"

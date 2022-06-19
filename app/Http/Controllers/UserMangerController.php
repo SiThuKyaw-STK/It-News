@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserMangerController extends Controller
 {
@@ -50,5 +53,24 @@ class UserMangerController extends Controller
         }
 
         return redirect()->route('user-manger.index')->with("toast",["icon" => "success" , "title" => $currentUser->name . " is restored!!!"]);
+    }
+
+    public function changeUserPassword(Request $request){
+
+        $validation = Validator::make($request->all(),[
+            "password"=>"required|String|min:8"
+        ]);
+
+        if ($validation->fails()){
+            return response()->json(["status"=>422,"message"=>$validation->errors()]);
+        }
+
+        $currentUser = User::find($request->id);
+        if ($currentUser->role == 1){
+            $currentUser->password = Hash::make($request->password);
+            $currentUser->update();
+        }
+
+        return response()->json(["status"=>200,"message"=>"password changed for ".$currentUser->name]);
     }
 }

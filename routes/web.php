@@ -32,6 +32,7 @@ Route::prefix('dashboard')->middleware(["auth","isBaned"])->group(function (){
         Route::post('/make-admin','UserMangerController@makeAdmin')->name('user-manger.makeAdmin');
         Route::post('/ban-user','UserMangerController@banUser')->name('user-manger.banUser');
         Route::post('/restore-user','UserMangerController@restoreUser')->name('user-manger.restoreUser');
+        Route::post('/change-user-password','UserMangerController@changeUserPassword')->name('user-manger.changeUserPassword');
     });
 
     Route::get('/home', 'HomeController@index')->name('home');
